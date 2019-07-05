@@ -59,9 +59,8 @@ export default class Sitemapper {
 	public get url() {
 		return this._url;
 	}
-	public _url: string;
-	public _timeout: number;
-	public _timeoutTable: { [url: string]: number };
+	private _url: string;
+	private _timeout: number;
 	/**
 	 * Construct the Sitemapper class
 	 *
@@ -81,7 +80,6 @@ export default class Sitemapper {
 		const settings = options || {};
 		this._url = settings.url;
 		this._timeout = settings.timeout || 15000;
-		this._timeoutTable = {};
 	}
 
 	/**
@@ -94,7 +92,7 @@ export default class Sitemapper {
 	 * sitemapper.fetch('example.xml')
 	 * 		.then((sites) => console.log(sites));
 	 */
-	public async fetch(url = this._url): Promise<ISitemapperResponse> {
+	public async fetch(url = this.url): Promise<ISitemapperResponse> {
 		this._url = this._url || url;
 		return {
 			url,
@@ -134,7 +132,7 @@ export default class Sitemapper {
 	 * @param {string} [url] - the Sitemaps url (e.g http://wp.seantburke.com/sitemap.xml)
 	 * @returns {Promise<ParseData>}
 	 */
-	public async parse(url = this._url): Promise<any> {
+	public async parse(url = this.url): Promise<any> {
 		const response = await request.get(url).set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8").timeout(this._timeout).buffer(true).parse(request.parse.image);
 		return await this.parseXml(response.body);
 	}
@@ -148,7 +146,7 @@ export default class Sitemapper {
 	 * @param {string} lastmod - internal optional - the lastmod to set on single sitemap
 	 * @returns {Promise<string[]>} An array of urls
 	 */
-	public async crawlSite(url: string, lastmod?: string): Promise<ISiteMapperResult> {
+	public async crawlSite(url = this.url, lastmod?: string): Promise<ISiteMapperResult> {
 		const data = await this.parse(url);
 		if (data && data.urlset) {
 			const urls = data.urlset;
@@ -201,7 +199,7 @@ export default class Sitemapper {
 	 * @param {string} url - the Sitemaps url (e.g http://wp.seantburke.com/sitemap.xml)
 	 * @returns {Promise<string[]>} An array of urls
 	 */
-	public async crawl(url: string): Promise<string[]> {
+	public async crawl(url = this.url): Promise<string[]> {
 		return (await this.crawlSite(url)).sitemaps.map((v) => v.urls).reduce((prev, curr) => prev.concat(curr), []).map((v) => v.loc);
 	}
 
@@ -221,7 +219,7 @@ export default class Sitemapper {
 	 * @callback
 	 */
 
-	public getSites(url = this._url, callback: (err: Error, sites?: string[]) => void) {
+	public getSites(url = this.url, callback: (err: Error, sites?: string[]) => void) {
 		let err: Error = null;
 		let sites: string[] = [];
 		this.fetch(url).then((response) => {

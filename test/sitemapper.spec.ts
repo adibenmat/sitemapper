@@ -3,7 +3,7 @@ import isUrl from "is-url";
 import "mocha";
 import moment from "moment";
 
-import Sitemapper from "../src/assets/sitemapper";
+import Sitemapper from "../src/sitemapper";
 
 describe("Sitemapper", () => {
 	let sitemapper: Sitemapper;
@@ -42,6 +42,11 @@ describe("Sitemapper", () => {
 		it("should set timeout", () => {
 			sitemapper.timeout = 1000;
 			expect(sitemapper.timeout).is.eq(1000);
+		});
+
+		it("should set timeout", () => {
+			sitemapper.url = "testvalue";
+			expect(sitemapper.url).to.eq("testvalue");
 		});
 
 	});

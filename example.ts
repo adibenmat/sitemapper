@@ -1,4 +1,4 @@
-import Sitemapper from "../src/sitemapper";
+import Sitemapper from "@drorgl/sitemapper";
 
 const sitemapper = new Sitemapper();
 

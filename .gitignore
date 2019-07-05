@@ -5,3 +5,5 @@ npm-debug.log
 tmp
 /.nyc_output
 /coverage
+/dist
+/docs
