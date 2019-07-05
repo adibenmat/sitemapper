@@ -1,82 +1,79 @@
 {
-  "name": "@drorgl/sitemapper",
-  "version": "2.1.14",
-  "description": "Parser for XML Sitemaps to be used with Robots.txt and web crawlers",
-  "keywords": [
-    "parse",
-    "sitemap",
-    "xml",
-    "robots.txt",
-    "sitemaps",
-    "crawlers",
-    "webcrawler"
-  ],
-  "homepage": "http://github.com/drorgl/sitemapper",
-  "bugs": {
-    "url": "http://github.com/drorgl/sitemapper/issues"
-  },
-  "license": "MIT",
-  "main": "./dist/sitemapper.js",
-  "types": "./dist/sitemapper.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/drorgl/sitemapper.git"
-  },
-  "author": {
-    "name": "Sean Thomas Burke",
-    "email": "sean@seantburke.com",
-    "url": "http://www.seantburke.com"
-  },
-  "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.spec.ts",
-    "lint": "tslint --project .",
-    "dryrun": "tsc -noEmit",
-    "build": "tsc",
-    "prepublish": "rimraf ./dist && npm run lint && npm run dryrun && npm run test && npm run build",
-    "coverage": "rimraf ./.nyc_output && rimraf ./coverage && nyc mocha -r ts-node/register -r source-map-support/register --ui bdd test/**/*.spec.{ts,tsx}\"",
-    "doc": "rimraf ./docs && typedoc",
-    "publish-now": "npm publish --access public"
-  },
-  "maintainers": [
-    {
-      "name": "Sean Thomas Burke",
-      "email": "sean@seantburke.com",
-      "url": "http://www.seantburke.com"
-    },
-    {
-      "name": "Dror Gluska",
-      "email": "drorgl@gmail.com",
-      "url": "http://drorgluska.com"
-    }
-  ],
-  "directories": {
-    "lib": "./lib",
-    "test": "./test"
-  },
-  "engines": {
-    "node": ">= 4.0.0"
-  },
-  "devDependencies": {},
-  "dependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/is-url": "^1.2.28",
-    "@types/mocha": "^5.2.7",
-    "@types/moment": "^2.13.0",
-    "@types/node": "^12.0.12",
-    "@types/superagent": "^4.1.2",
-    "@types/xml2js": "^0.4.4",
-    "chai": "^4.2.0",
-    "moment": "^2.24.0",
-    "superagent": "^5.1.0",
-    "ts-node": "^8.3.0",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.2",
-    "xml2js": "^0.4.19",
-    "is-url": "^1.2.4",
-    "mocha": "^5.2.0",
-    "rimraf": "^2.6.3",
-    "source-map-support": "^0.5.12",
-    "typedoc": "^0.14.2",
-    "nyc": "^14.1.1"
-  }
+	"name": "@drorgl/sitemapper",
+	"version": "2.1.14",
+	"description": "Parser for XML Sitemaps to be used with Robots.txt and web crawlers",
+	"keywords": [
+		"parse",
+		"sitemap",
+		"xml",
+		"robots.txt",
+		"sitemaps",
+		"crawlers",
+		"webcrawler"
+	],
+	"homepage": "http://github.com/drorgl/sitemapper",
+	"bugs": {
+		"url": "http://github.com/drorgl/sitemapper/issues"
+	},
+	"license": "MIT",
+	"main": "./dist/sitemapper.js",
+	"types": "./dist/sitemapper.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/drorgl/sitemapper.git"
+	},
+	"author": {
+		"name": "Sean Thomas Burke",
+		"email": "sean@seantburke.com",
+		"url": "http://www.seantburke.com"
+	},
+	"scripts": {
+		"test": "mocha -r ts-node/register test/**/*.spec.ts",
+		"lint": "tslint --project .",
+		"dryrun": "tsc -noEmit",
+		"build": "tsc",
+		"prepublish": "rimraf ./dist && npm run lint && npm run dryrun && npm run test && npm run build",
+		"coverage": "rimraf ./.nyc_output && rimraf ./coverage && nyc mocha -r ts-node/register -r source-map-support/register --ui bdd test/**/*.spec.{ts,tsx}\"",
+		"doc": "rimraf ./docs && typedoc",
+		"publish-now": "npm publish --access public"
+	},
+	"maintainers": [
+		{
+			"name": "Sean Thomas Burke",
+			"email": "sean@seantburke.com",
+			"url": "http://www.seantburke.com"
+		},
+		{
+			"name": "Dror Gluska",
+			"email": "drorgl@gmail.com",
+			"url": "http://drorgluska.com"
+		}
+	],
+	"engines": {
+		"node": ">= 4.0.0"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.1.7",
+		"@types/is-url": "^1.2.28",
+		"@types/mocha": "^5.2.7",
+		"@types/moment": "^2.13.0",
+		"@types/node": "^12.0.12",
+		"@types/superagent": "^4.1.2",
+		"@types/xml2js": "^0.4.4",
+		"chai": "^4.2.0",
+		"moment": "^2.24.0",
+		"ts-node": "^8.3.0",
+		"tslint": "^5.18.0",
+		"typescript": "^3.5.2",
+		"is-url": "^1.2.4",
+		"mocha": "^5.2.0",
+		"rimraf": "^2.6.3",
+		"source-map-support": "^0.5.12",
+		"typedoc": "^0.14.2",
+		"nyc": "^14.1.1"
+	},
+	"dependencies": {
+		"xml2js": "^0.4.19",
+		"superagent": "^5.1.0"
+	}
 }
