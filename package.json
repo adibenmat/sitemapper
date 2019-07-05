@@ -62,9 +62,7 @@
   "engines": {
     "node": ">= 4.0.0"
   },
-  "devDependencies": {
-   
-  },
+  "devDependencies": {},
   "dependencies": {
     "@types/chai": "^4.1.7",
     "@types/is-url": "^1.2.28",
