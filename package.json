@@ -12,17 +12,12 @@
     "webcrawler"
   ],
   "homepage": "http://github.com/drorgl/sitemapper",
-  "tonicExampleFilename": "example.js",
   "bugs": {
     "url": "http://github.com/drorgl/sitemapper/issues"
   },
   "license": "MIT",
-  "files": [
-    "lib",
-    "sitemapper.d.ts"
-  ],
-  "main": "./lib/sitemapper.js",
-  "types": "./sitemapper.d.ts",
+  "main": "./dist/sitemapper.js",
+  "types": "./dist/sitemapper.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/drorgl/sitemapper.git"
