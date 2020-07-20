@@ -6,8 +6,9 @@
  * @author Sean Burke <hawaiianchimp@gmail.com>
  */
 
-import * as request from "superagent";
 import * as xmlParse from "xml2js";
+import { IRequester } from "./crawler/IRequester";
+import { SuperAgentRequester } from "./crawler/SuperAgentRequester";
 import { ISiteMapperResult } from "./ISiteMapperIndex";
 import { ISitemapperOptions } from "./ISitemapperOptions";
 import { ISitemapperResponse } from "./ISitemapperResponse";
@@ -16,6 +17,7 @@ import { ISitemapperResponse } from "./ISitemapperResponse";
  * Sitemapper
  */
 export default class Sitemapper {
+	private _requester: IRequester;
 
 	/**
 	 * Get the timeout
@@ -80,6 +82,7 @@ export default class Sitemapper {
 		const settings = options || {};
 		this._url = settings.url;
 		this._timeout = settings.timeout || 15000;
+		this._requester = settings.requester || new SuperAgentRequester(this.timeout);
 	}
 
 	/**
@@ -133,8 +136,8 @@ export default class Sitemapper {
 	 * @returns {Promise<ParseData>}
 	 */
 	public async parse(url = this.url): Promise<any> {
-		const response = await request.get(url).set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8").timeout(this._timeout).buffer(true).parse(request.parse.image);
-		return await this.parseXml(response.body);
+		const content = await this._requester.get(url);
+		return await this.parseXml(content);
 	}
 
 	/**
@@ -150,17 +153,18 @@ export default class Sitemapper {
 		const data = await this.parse(url);
 		if (data && data.urlset) {
 			const urls = data.urlset;
+			const childUrls = (urls.url) ? urls.url : [];
 			return {
 				url,
 				sitemaps: [
 					{
 						loc: url,
 						lastmod,
-						urls: urls.url.map((v: any) => {
+						urls: childUrls.map((v: any) => {
 							return {
 								loc: (v.loc) ? v.loc[0] : null,
 								lastmod: (v.lastmod) ? v.lastmod[0] : null,
-								changefreq : (v.changefreq) ? v.changefreq[0] : null,
+								changefreq: (v.changefreq) ? v.changefreq[0] : null,
 								priority: (v.priority) ? v.priority[0] : null
 							};
 						})

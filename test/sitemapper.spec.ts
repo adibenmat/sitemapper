@@ -3,6 +3,7 @@ import isUrl from "is-url";
 import "mocha";
 import moment from "moment";
 
+import { SuperAgentRequester } from "../src/crawler/SuperAgentRequester";
 import Sitemapper from "../src/sitemapper";
 
 describe("Sitemapper", () => {
@@ -80,16 +81,19 @@ describe("Sitemapper", () => {
 			expect(isUrl(data.sites[0])).to.eq(true);
 		}).timeout(30000);
 
-		it("http://www.cnn.com/sitemaps/sitemap-index.xml sitemaps should be an array", async () => {
-			const url: string = "http://www.cnn.com/sitemaps/sitemap-index.xml";
-			sitemapper.timeout = 5000;
+		it("https://www.cnn.com/sitemaps/cnn/index.xml sitemaps should be an array", async () => {
+			sitemapper = new Sitemapper({
+				requester: new SuperAgentRequester(5000, 20, 100, true)
+			});
+
+			const url: string = "https://www.cnn.com/sitemaps/cnn/index.xml";
 			const data = await sitemapper.fetch(url);
 			console.log("found", data.sites.length, "sites");
 			expect(data.sites).to.be.instanceOf(Array);
 			expect(data.url).to.eq(url);
 			expect(data.sites.length).to.be.greaterThan(2);
 			expect(isUrl(data.sites[0])).to.eq(true);
-		}).timeout(30000);
+		}).timeout(60000);
 	});
 
 	describe("getSites method", () => {
@@ -108,7 +112,7 @@ describe("Sitemapper", () => {
 		it("parse urlset website - https://www.sitemaps.org/sitemap.xml", async () => {
 			const url = "https://www.sitemaps.org/sitemap.xml";
 			const urlSet = await sitemapper.crawlSite(url);
-			const numberOfUrls = urlSet.sitemaps.reduce((prev, curr) => {prev.no += curr.urls.length; return prev; }, {no: 0});
+			const numberOfUrls = urlSet.sitemaps.reduce((prev, curr) => { prev.no += curr.urls.length; return prev; }, { no: 0 });
 			console.log("total sitemaps:", urlSet.sitemaps.length, "total urls:", numberOfUrls.no);
 
 			expect(urlSet.url).to.eq(url);
@@ -124,7 +128,7 @@ describe("Sitemapper", () => {
 			const url = "https://www.searchenginejournal.com/sitemap_index.xml";
 			const urlSet = await sitemapper.crawlSite(url);
 
-			const numberOfUrls = urlSet.sitemaps.reduce((prev, curr) => {prev.no += curr.urls.length; return prev; }, {no: 0});
+			const numberOfUrls = urlSet.sitemaps.reduce((prev, curr) => { prev.no += curr.urls.length; return prev; }, { no: 0 });
 			console.log("total sitemaps:", urlSet.sitemaps.length, "total urls:", numberOfUrls.no);
 
 			expect(urlSet.url).to.eq(url);
