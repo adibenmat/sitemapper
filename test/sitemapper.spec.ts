@@ -82,7 +82,12 @@ describe("Sitemapper", () => {
 
 		it("https://www.cnn.com/sitemaps/cnn/index.xml sitemaps should be an array", async () => {
 			sitemapper = new Sitemapper({
-				requester: new SuperAgentRequester(15000, 5, 100, true)
+				requester: new SuperAgentRequester({
+					timeout: 15000,
+					maximum_parallelism: 5,
+					parallelism_delay: 100,
+					gracefulFailure: true
+				})
 			});
 
 			const url: string = "https://www.cnn.com/sitemaps/cnn/index.xml";
@@ -92,7 +97,7 @@ describe("Sitemapper", () => {
 			expect(data.url).to.eq(url);
 			expect(data.sites.length).to.be.greaterThan(2);
 			expect(isUrl(data.sites[0])).to.eq(true);
-		}).timeout(120000);
+		}).timeout(300000);
 	});
 
 	describe("getSites method", () => {

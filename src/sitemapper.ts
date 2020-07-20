@@ -82,7 +82,9 @@ export default class Sitemapper {
 		const settings = options || {};
 		this._url = settings.url;
 		this._timeout = settings.timeout || 15000;
-		this._requester = settings.requester || new SuperAgentRequester(this.timeout);
+		this._requester = settings.requester || new SuperAgentRequester({
+			timeout: this.timeout
+		});
 	}
 
 	/**

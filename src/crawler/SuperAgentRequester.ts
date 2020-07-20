@@ -1,26 +1,25 @@
 import { EventEmitter } from "events";
 import * as request from "superagent";
 import { IRequester } from "./IRequester";
+import { ISuperAgentRequesterOptions } from "./ISuperAgentRequesterOptions";
 
 /**
  * SuperAgent Requester
  */
 export class SuperAgentRequester extends EventEmitter implements IRequester {
 	private _activeRequests: number = 0;
+	private _options: ISuperAgentRequesterOptions;
 
-	/**
-	 * create new instance
-	 * @param _timeout timeout for each request
-	 * @param _maximum_parallelism maximum number of requests to perform simultaneously
-	 * @param _parallelism_delay interval between checks for pending requests
-	 * @param _gracefulFailure failure will return null instead of throwing an exception
-	 */
 	constructor(
-		private _timeout: number = 15000,
-		private _maximum_parallelism: number = 5,
-		private _parallelism_delay: number = 100,
-		private _gracefulFailure: boolean = false) {
+		options: ISuperAgentRequesterOptions) {
 		super();
+		this._options = Object.assign({
+			timeout: 15000,
+			maximum_parallelism: 5,
+			parallelism_delay: 100,
+			gracefulFailure: false
+		} as ISuperAgentRequesterOptions,
+			options);
 	}
 
 	/**
@@ -30,7 +29,7 @@ export class SuperAgentRequester extends EventEmitter implements IRequester {
 	 */
 	public async get(url: string): Promise<string> {
 
-		if (this._gracefulFailure) {
+		if (this._options.gracefulFailure) {
 			try {
 				return await this.getResource(url);
 			} catch (e) {
@@ -53,8 +52,8 @@ export class SuperAgentRequester extends EventEmitter implements IRequester {
 
 	private async getResource(url: string): Promise<string> {
 
-		while (this._activeRequests > this._maximum_parallelism) {
-			await this.wait(this._parallelism_delay);
+		while (this._activeRequests > this._options.maximum_parallelism) {
+			await this.wait(this._options.parallelism_delay);
 		}
 		this.emit("requesting", url);
 		this._activeRequests++;
@@ -63,7 +62,7 @@ export class SuperAgentRequester extends EventEmitter implements IRequester {
 			.get(url)
 			.set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 			.set("Accept-Encoding", "gzip, deflate")
-			.timeout(this._timeout)
+			.timeout(this._options.timeout)
 			.buffer(true)
 			.parse(request.parse.image);
 		this._activeRequests--;
