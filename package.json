@@ -16,8 +16,8 @@
 		"url": "http://github.com/drorgl/sitemapper/issues"
 	},
 	"license": "MIT",
-	"main": "./dist/sitemapper.js",
-	"types": "./dist/sitemapper.d.ts",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/drorgl/sitemapper.git"

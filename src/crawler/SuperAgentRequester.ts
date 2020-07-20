@@ -17,8 +17,8 @@ export class SuperAgentRequester extends EventEmitter implements IRequester {
 	 */
 	constructor(
 		private _timeout: number = 15000,
-		private _maximum_parallelism: number = 10,
-		private _parallelism_delay: number = 50,
+		private _maximum_parallelism: number = 5,
+		private _parallelism_delay: number = 100,
 		private _gracefulFailure: boolean = false) {
 		super();
 	}
@@ -56,6 +56,7 @@ export class SuperAgentRequester extends EventEmitter implements IRequester {
 		while (this._activeRequests > this._maximum_parallelism) {
 			await this.wait(this._parallelism_delay);
 		}
+		this.emit("requesting", url);
 		this._activeRequests++;
 
 		const response = await request
@@ -66,6 +67,7 @@ export class SuperAgentRequester extends EventEmitter implements IRequester {
 			.buffer(true)
 			.parse(request.parse.image);
 		this._activeRequests--;
+		this.emit("done", url, response.body);
 		return response.body;
 	}
 

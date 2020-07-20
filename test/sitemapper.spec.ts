@@ -3,8 +3,7 @@ import isUrl from "is-url";
 import "mocha";
 import moment from "moment";
 
-import { SuperAgentRequester } from "../src/crawler/SuperAgentRequester";
-import Sitemapper from "../src/sitemapper";
+import Sitemapper, { SuperAgentRequester } from "../src";
 
 describe("Sitemapper", () => {
 	let sitemapper: Sitemapper;
@@ -83,7 +82,7 @@ describe("Sitemapper", () => {
 
 		it("https://www.cnn.com/sitemaps/cnn/index.xml sitemaps should be an array", async () => {
 			sitemapper = new Sitemapper({
-				requester: new SuperAgentRequester(5000, 20, 100, true)
+				requester: new SuperAgentRequester(15000, 5, 100, true)
 			});
 
 			const url: string = "https://www.cnn.com/sitemaps/cnn/index.xml";
@@ -93,7 +92,7 @@ describe("Sitemapper", () => {
 			expect(data.url).to.eq(url);
 			expect(data.sites.length).to.be.greaterThan(2);
 			expect(isUrl(data.sites[0])).to.eq(true);
-		}).timeout(60000);
+		}).timeout(120000);
 	});
 
 	describe("getSites method", () => {
@@ -137,6 +136,6 @@ describe("Sitemapper", () => {
 			expect(urlSet.sitemaps[0].urls.length).to.be.greaterThan(10);
 			expect(isUrl(urlSet.sitemaps[0].urls[0].loc)).to.eq(true);
 			expect(moment(urlSet.sitemaps[0].urls[0].lastmod).isValid()).to.eq(true);
-		}).timeout(30000);
+		}).timeout(60000);
 	});
 });
