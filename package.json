@@ -1,6 +1,6 @@
 {
-	"name": "@drorgl/sitemapper",
-	"version": "2.1.17",
+	"name": "@adibenmat/sitemapper",
+	"version": "2.1.18",
 	"description": "Parser for XML Sitemaps to be used with Robots.txt and web crawlers",
 	"keywords": [
 		"parse",
@@ -11,16 +11,16 @@
 		"crawlers",
 		"webcrawler"
 	],
-	"homepage": "http://github.com/drorgl/sitemapper",
+	"homepage": "http://github.com/adibenmat/sitemapper",
 	"bugs": {
-		"url": "http://github.com/drorgl/sitemapper/issues"
+		"url": "http://github.com/adibenmat/sitemapper/issues"
 	},
 	"license": "MIT",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/drorgl/sitemapper.git"
+		"url": "git://github.com/adibenmat/sitemapper.git"
 	},
 	"author": {
 		"name": "Sean Thomas Burke",
@@ -45,8 +45,8 @@
 		},
 		{
 			"name": "Dror Gluska",
-			"email": "drorgl@gmail.com",
-			"url": "http://drorgluska.com"
+			"email": "adibenmat@gmail.com",
+			"url": "http://adibenmatuska.com"
 		}
 	],
 	"engines": {
