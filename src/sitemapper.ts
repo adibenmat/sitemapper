@@ -167,7 +167,8 @@ export default class Sitemapper {
 								loc: (v.loc) ? v.loc[0] : null,
 								lastmod: (v.lastmod) ? v.lastmod[0] : null,
 								changefreq: (v.changefreq) ? v.changefreq[0] : null,
-								priority: (v.priority) ? v.priority[0] : null
+								priority: (v.priority) ? v.priority[0] : null,
+								image: (v["image:image"]) ? v["image:image"][0] : null
 							};
 						})
 					}
